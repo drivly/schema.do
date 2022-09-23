@@ -27,8 +27,8 @@ export default {
   fetch: async (req, env) => {
     const { user, origin, requestId, method, body, time, pathname, pathSegments, pathOptions, url, query } = await env.CTX.fetch(req).then(res => res.json())
     
-    const [ action, language = 'typescript', name = 'Northwind', url = 'json.fyi/nortwind.json' ]pathSegments
-    const jsonString = fetch('http://' + url).then(res => res.text())
+    const [ action, language = 'typescript', name = 'Northwind', target = 'json.fyi/nortwind.json' ]pathSegments
+    const jsonString = fetch('http://' + target).then(res => res.text())
     
     const { lines: swiftPerson } = await quicktypeJSON(
       language,
