@@ -48,7 +48,7 @@ export default {
     const { user, origin, requestId, method, body, time, pathname, pathSegments, pathOptions, url, query } = await env.CTX.fetch(req).then(res => res.json())
     
     const [ action, language = 'typescript', name = 'Northwind', target = 'json.fyi/northwind.json' ] = pathSegments
-    const jsonString = fetch('http://' + target).then(res => res.text())
+    const jsonString = await fetch('http://' + target).then(res => res.text())
     
     const lines = await quicktypeJSON(
       language,
