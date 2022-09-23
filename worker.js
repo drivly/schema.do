@@ -15,12 +15,28 @@ export const api = {
   repo: 'https://github.com/drivly/schema.do',
 }
 
+import {
+  quicktype,
+  InputData,
+  jsonInputForTargetLanguage,
+  JSONSchemaInput,
+  FetchingJSONSchemaStore,
+} from 'quicktype-core'
+
 export default {
   fetch: async (req, env) => {
     const { user, origin, requestId, method, body, time, pathname, pathSegments, pathOptions, url, query } = await env.CTX.fetch(req).then(res => res.json())
     
+    const [ action, language = 'typescript', name = 'Northwind', url = 'json.fyi/nortwind.json' ]pathSegments
+    const jsonString = fetch('http://' + url).then(res => res.text())
+    
+    const { lines: swiftPerson } = await quicktypeJSON(
+      language,
+      name,
+      jsonString
+    ).catch(ex => ex.message)
 
-    return new Response(JSON.stringify({ api, url, pathSegments, pathOptions, user }, null, 2), { headers: { 'content-type': 'application/json; charset=utf-8' }})
+    return new Response(JSON.stringify({ api, url, pathSegments, pathOptions, lines, user }, null, 2), { headers: { 'content-type': 'application/json; charset=utf-8' }})
   },
 }
 
