@@ -54,7 +54,7 @@ export default {
       language,
       name,
       jsonString
-    ).catch(ex => ex.message)
+    ).catch(console.log)
 
     return new Response(JSON.stringify({ api, url, pathSegments, pathOptions, lines, user }, null, 2), { headers: { 'content-type': 'application/json; charset=utf-8' }})
   },
