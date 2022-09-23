@@ -50,13 +50,15 @@ export default {
     const [ action, language = 'typescript', name = 'Northwind', target = 'json.fyi/northwind.json' ] = pathSegments
     const jsonString = await fetch('http://' + target).then(res => res.text())
     
-    const lines = await quicktypeJSON(
+    const data = await quicktypeJSON(
       language,
       name,
       jsonString
     ).catch(console.log)
+    
+    const codeLines = data.lines
 
-    return new Response(JSON.stringify({ api, url, pathSegments, pathOptions, lines, user }, null, 2), { headers: { 'content-type': 'application/json; charset=utf-8' }})
+    return new Response(JSON.stringify({ api, url, pathSegments, pathOptions, codeLines, user }, null, 2), { headers: { 'content-type': 'application/json; charset=utf-8' }})
   },
 }
 
