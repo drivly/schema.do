@@ -23,6 +23,26 @@ import {
   FetchingJSONSchemaStore,
 } from 'quicktype-core'
 
+async function quicktypeJSON(targetLanguage, typeName, jsonString) {
+  const jsonInput = jsonInputForTargetLanguage(targetLanguage)
+
+  // We could add multiple samples for the same desired
+  // type, or many sources for other types. Here we're
+  // just making one type from one piece of sample JSON.
+  await jsonInput.addSource({
+    name: typeName,
+    samples: [jsonString],
+  })
+
+  const inputData = new InputData();
+  inputData.addInput(jsonInput);
+
+  return await quicktype({
+    inputData,
+    lang: targetLanguage,
+  })
+}
+
 export default {
   fetch: async (req, env) => {
     const { user, origin, requestId, method, body, time, pathname, pathSegments, pathOptions, url, query } = await env.CTX.fetch(req).then(res => res.json())
