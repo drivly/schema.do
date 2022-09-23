@@ -45,7 +45,7 @@ async function quicktypeJSON(targetLanguage, typeName, jsonString) {
 
 export default {
   fetch: async (req, env) => {
-    const { user, origin, requestId, method, body, time, pathname, pathSegments, pathOptions, url, query } = await env.CTX.fetch(req).then(res => res.json())
+    const { user, origin, requestId, method, body, time, pathname, search, pathSegments, pathOptions, url, query } = await env.CTX.fetch(req).then(res => res.json())
     
     const [ action, language = 'typescript', name = 'Northwind', target = 'json.fyi/northwind.json' ] = pathSegments
     const jsonString = await fetch('http://' + target).then(res => res.text())
@@ -57,8 +57,10 @@ export default {
     ).catch(console.log)
     
     const codeLines = data.lines
+    const code = codeLines.join('\n')
+    const codeFile = 'https://schema.do/file' + pathname + search
 
-    return new Response(JSON.stringify({ api, url, pathSegments, pathOptions, codeLines, user }, null, 2), { headers: { 'content-type': 'application/json; charset=utf-8' }})
+    return new Response(JSON.stringify({ api, url, pathSegments, pathOptions, codeFile, codeLines, code, user }, null, 2), { headers: { 'content-type': 'application/json; charset=utf-8' }})
   },
 }
 
