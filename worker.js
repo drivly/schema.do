@@ -58,7 +58,7 @@ export default {
     
     const codeLines = data.lines
     const code = codeLines.join('\n')
-    const codeFile = 'https://schema.do/file' + pathname + search
+    const codeFile = req.url.replace(action,'file')
 
     if (action == 'file') return new Response(code, { headers: { 'content-type': 'application/javascript; charset=utf-8' }})
     
