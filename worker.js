@@ -45,7 +45,7 @@ async function quicktypeJSON(targetLanguage, typeName, jsonString) {
 
 export default {
   fetch: async (req, env) => {
-    const { user, origin, requestId, method, body, time, pathname, query, search, pathSegments, pathOptions, url, query } = await env.CTX.fetch(req).then(res => res.json())
+    const { user, origin, requestId, method, body, time, pathname, query, search, pathSegments, pathOptions, url } = await env.CTX.fetch(req).then(res => res.json())
     
     const [ action, language = 'typescript', name = 'Northwind', target = 'json.fyi/northwind.json' ] = pathSegments
     const jsonString = await fetch('http://' + target).then(res => res.text())
